@@ -100,9 +100,7 @@ cc_library(
         "tcmalloc.h",
     ],
     copts = TCMALLOC_DEFAULT_COPTS,
-    # The only action needed to produce a .so file.
-    # LD_PRELOAD FTW!
-    linkstatic = 0,
+    linkstatic = 1,
     visibility = ["//visibility:public"],
     deps = tcmalloc_deps + [
         ":common_8k_pages",
@@ -110,6 +108,13 @@ cc_library(
         "//tcmalloc/internal:page_size",
     ],
     alwayslink = 1,
+)
+
+cc_binary(
+	name = "libtcmalloc.so",
+	deps = [":tcmalloc"],
+	linkshared = 1,
+	copts = TCMALLOC_DEFAULT_COPTS,
 )
 
 # Provides tcmalloc always; use per-thread mode.
