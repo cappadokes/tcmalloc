@@ -100,7 +100,9 @@ cc_library(
         "tcmalloc.h",
     ],
     copts = TCMALLOC_DEFAULT_COPTS,
-    linkstatic = 1,
+    # The only action needed to produce a .so file.
+    # LD_PRELOAD FTW!
+    linkstatic = 0,
     visibility = ["//visibility:public"],
     deps = tcmalloc_deps + [
         ":common_8k_pages",
